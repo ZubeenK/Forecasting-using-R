@@ -1,0 +1,89 @@
+myts
+dates <- as.Date(training_data$`Week Start Date`,format = "%d-%b-%y")
+myts =ts(training_data, start=c(2018, 1), end=c(2020, 12), frequency=105)
+# plot series
+plot(myts)
+Quan<-ts(training_data$`Weekly Demand Quantity`, frequency = 52, start = c(2018, 7))
+Quan_dec<-decompose(Quan)
+plot(Quan_dec)
+acf(Quan)
+pacf(Quan)
+
+fit_ari<-ts(training_data$`Weekly Demand Quantity`, frequency = 52, start = c(2018, 07,07),end = c(2020,07,04))
+arima_mod <- auto.arima(fit_ari)
+predict(arima_mod)
+print(arima_mod)
+forecast_ari <- forecast(arima_mod, h = 8)
+plot(forecast_ari)
+acf(arima_mod$residual)
+pacf(arima_mod$residual)
+
+
+mape = MAPE(test_data$`Weekly Demand Quantity` , forecast_ari$mean)
+print(mape)
+m <- mean(abs((test_data$`Weekly Demand Quantity` - forecast_ari$mean)/test_data$`Weekly Demand Quantity`))
+wmape <- sum(abs(test_data$`Weekly Demand Quantity` - forecast_ari$mean))/sum(abs(test_data$`Weekly Demand Quantity`))
+
+forc_holt <- Holt(fit_ari) 
+plot(forc_holt)for
+max(new_train$`Week Start Date`)
+accuracy(forecast_ari)
+
+mape1 = MAPE(test_data$`Weekly Demand Quantity` , forecast_ari$mean)
+print(mape1)
+m <- mean(abs((test_data$`Weekly Demand Quantity` - forecast_ari$mean)/test_data$`Weekly Demand Quantity`))
+wmape1 <- sum(abs(test_data$`Weekly Demand Quantity` - forecast_ari$mean))/sum(abs(test_data$`Weekly Demand Quantity`))
+
+
+adf.test(Quan)
+Quan_d2<- diff(Quan,differences = 1)
+adf.test(Quan_d2)
+autoplot(Quan_d2)
+acf(Quan_d2)
+pacf(Quan_d2)
+manual_fit<-arima(Quan,order = c(1,1,0))
+manual_forecast<-forecast(manual_fit,h = 8)
+autoplot(manual_forecast)
+
+> mape2 = MAPE(test_data$`Weekly Demand Quantity` , manual_forecast$mean)
+> print(mape1)
+> wmape2 <- sum(abs(test_data$`Weekly Demand Quantity` - manual_forecast$mean))/sum(abs(test_data$`Weekly Demand Quantity`))
+> print(wmape5)
+
+new_train <- training_data[1:99 , 1:3]
+hold_data <- training_data[100:105, 1:3]
+print(hold_data)
+
+new_ts <- ts(new_train$`Weekly Demand Quantity`, frequency = 52, start = c(2018, 07,07),end = c(2020,06,27))
+arima_mod1 <- auto.arima(new_ts)
+print(arima_mod1)
+forecast_ari1 <- forecast(arima_mod1, h = 8)
+plot(forecast_ari1)
+forcast_holtw1 <- HoltWinters(new_ts)
+for_hw1 <- forecast(forcast_holtw1, h = 8)
+plot(for_hw1)
+
+> mape3 = MAPE(hold_data$`Weekly Demand Quantity` , forecast_ari1$mean)
+> print(mape3)
+
+> m4 <- mean(abs((hold_data$`Weekly Demand Quantity` - forecast_ari1$mean)/hold_data$`Weekly Demand Quantity`))
+> wmape4 <- sum(abs(hold_data$`Weekly Demand Quantity` - forecast_ari1$mean))/sum(abs(hold_data$`Weekly Demand Quantity`))
+> print(wmape4)
+
+> mape4 = MAPE(hold_data$`Weekly Demand Quantity` , for_hw1$mean)
+> print(mape4)
+> m5 <- mean(abs((hold_data$`Weekly Demand Quantity` - for_hw1$mean)/hold_data$`Weekly Demand Quantity`))
+> wmape4 <- sum(abs(hold_data$`Weekly Demand Quantity` - for_hw1$mean))/sum(abs(hold_data$`Weekly Demand Quantity`))
+> print(wmape4)
+
+> autoplot(Quan_d2)
+> acf(Quan_d2)
+> pacf(Quan_d2)
+> manual_fit<-arima(Quan,order = c(1,1,0))
+> manual_forecast<-forecast(manual_fit,h = 8)
+> autoplot(manual_forecast)
+> mape5 = MAPE(test_data$`Weekly Demand Quantity` , manual_forecast$mean)
+> print(mape5)
+> wmape5 <- sum(abs(test_data$`Weekly Demand Quantity` - manual_forecast$mean))/sum(abs(test_data$`Weekly Demand Quantity`))
+> print(wmape5)
+
